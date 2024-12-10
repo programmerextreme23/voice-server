@@ -4,8 +4,8 @@ const { Groq } = require('groq-sdk');
 const WebSocket = require('ws');
 const app = express();
 const port = process.env.PORT || 3000;
-const deepgramClient = createClient(process.env.DEEPGRAM_API_KEY);
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const deepgramClient = createClient("717ebd41111ea8aa7c284de133624af04b8d5b1f");
+const groq = new Groq({ apiKey: "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" });
 const wsUrl = process.env.VERCEL_URL;
 
 // This is the first message that the AI will say once the call connects.
