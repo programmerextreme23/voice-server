@@ -6,24 +6,28 @@ const app = express();
 const port = process.env.PORT || 3000;
 const deepgramClient = createClient(process.env.DEEPGRAM_API_KEY);
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
-const wsUrl = process.env.REPLIT_DEV_DOMAIN;
+const wsUrl = process.env.VERCEL_URL;
 
 // This is the first message that the AI will say once the call connects.
 const welcomeMessage = "Hello, how are you today. Can I take your order please.";
 
-console.log("Add This To Twilio Voice Request URL: ", "https://"+wsUrl+":3000/");
+console.log("Add This To Twilio Voice Request URL: ", "https://"+wsUrl+"/");
 console.log("***********************");
 
 app.use(express.static('public'));
 
 app.get('/', (_, res) => res.type('text').send('Twilio media stream transcriber'));
 
+app.get('/ws-url', (req, res) => {
+  res.sendFile(__dirname + '/ws-url.html');
+});
+
 app.post('/', async (_, res) => {
   res.type('xml')
     .send(
       `<Response>
         <Connect>
-          <Stream url='wss://${wsUrl}:3000' />
+          <Stream url='wss://${wsUrl}' />
         </Connect>
       </Response>`
     );
